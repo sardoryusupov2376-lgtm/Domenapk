@@ -1,0 +1,10 @@
+{
+  "name": "Domen.uz — Milliy Domen Qidiruv va Buyurtma Ilovasi",
+  "short_name": "Domen.uz",
+  "description": "Domen band yoki bo'shligini tekshirish va onlayn buyurtma berish ilovasi",
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#052624",
+  "theme_color": "#052624"
+}

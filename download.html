@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#052624">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Domen.uz — Rasmiy Ilovani Yuklab Olish (Android APK & iOS)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#052624;--deep:#0B3D38;--teal:#1FB5A0;--mint:#8CF0DC;--chalk:#EEF8F6;--coral:#FF6F5E;--amber:#FFC24D;--line:rgba(140,240,220,.18)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%;background:var(--ink);color:var(--chalk);font:400 15px/1.55 Onest,system-ui,sans-serif;overflow-x:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0}
+.bg{position:fixed;inset:0;z-index:0;background:radial-gradient(70% 50% at 50% 25%,#0F5A52 0%,transparent 70%),var(--ink);pointer-events:none}
+.wrap{position:relative;z-index:2;max-width:1040px;margin:0 auto;padding:24px 20px 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-bottom:24px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font:700 20px Unbounded,sans-serif}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:99px;background:rgba(31,181,160,.18);border:1px solid var(--line);color:var(--mint);font-size:12.5px;font-weight:600}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center;margin-top:34px}
+@media (max-width:780px){.hero{grid-template-columns:1fr}}
+h1{font:700 clamp(26px,4vw,40px)/1.15 Unbounded,sans-serif;letter-spacing:-.02em;margin:14px 0}
+.lead{color:rgba(238,248,246,.78);font-size:16px;margin-bottom:24px}
+.dl-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media (max-width:580px){.dl-cards{grid-template-columns:1fr}}
+.card{background:rgba(11,61,56,.72);border:1px solid var(--line);border-radius:22px;padding:22px;backdrop-filter:blur(10px);display:flex;flex-direction:column;justify-content:space-between;gap:16px;transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);border-color:var(--mint)}
+.card-top{display:flex;align-items:center;gap:14px}
+.ico{width:52px;height:52px;border-radius:16px;background:rgba(140,240,220,.15);display:flex;align-items:center;justify-content:center;font-size:26px;flex:none}
+.btn{width:100%;padding:14px 18px;border-radius:14px;background:var(--teal);color:#032421;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.btn:hover{filter:brightness(1.08)}
+.btn.mint{background:var(--mint)}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--chalk)}
+.mock{background:linear-gradient(165deg,#0B3D38,#041E1C);border:2px solid rgba(140,240,220,.35);border-radius:36px;padding:20px;box-shadow:0 26px 70px rgba(0,0,0,.6);max-width:340px;margin:0 auto;width:100%}
+.notch{width:96px;height:20px;background:#021412;border-radius:99px;margin:0 auto 16px}
+.sms-preview{background:rgba(5,38,36,.95);border:1.5px dashed var(--mint);border-radius:16px;padding:14px;margin-bottom:12px}
+.sms-preview .code{font:700 22px Unbounded,sans-serif;color:var(--mint);letter-spacing:.2em;margin-top:4px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+@media (max-width:720px){.grid3{grid-template-columns:1fr}}
+.feat{background:rgba(11,61,56,.5);border:1px solid var(--line);border-radius:18px;padding:18px}
+.feat h3{font:700 15px Unbounded,sans-serif;color:var(--mint);margin-bottom:8px}
+#toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:30;background:var(--chalk);color:var(--ink);padding:12px 20px;border-radius:12px;font-weight:700;opacity:0;transition:.3s;pointer-events:none}
+#toast.on{opacity:1}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="wrap">
+  <header>
+    <div class="brand">🌐 Domen.uz</div>
+    <span class="pill">✅ Android APK & iOS WebApp tayyor</span>
+  </header>
+
+  <section class="hero">
+    <div>
+      <span class="pill">🚀 Rasmiy Mobil va Web Ilova • v2.4.0</span>
+      <h1>Domen.uz ilovasini smartfoningizga yuklab oling</h1>
+      <p class="lead">Endi Telegram ichiga kirmasdan ham .uz, .com, .net, .org va .io domenlarini tekshirishingiz, SMS tasdiqlash kodini toʻgʻridan-toʻgʻri sayt ekranida qabul qilib buyurtma berishingiz mumkin.</p>
+
+      <div class="dl-cards">
+        <div class="card">
+          <div>
+            <div class="card-top">
+              <div class="ico">🤖</div>
+              <div>
+                <div style="font:700 17px Unbounded,sans-serif">Android</div>
+                <div style="font-size:12.5px;color:rgba(238,248,246,.65)">Android 8.0+ • WebAPK / Paket</div>
+              </div>
+            </div>
+            <p style="font-size:13.5px;color:rgba(238,248,246,.78);margin-top:12px">Android telefon va planshetlarga bir tugma bilan oʻrnatiladi.</p>
+          </div>
+          <button class="btn" id="dlAndroidBtn" type="button">📥 Android uchun yuklab olish</button>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="card-top">
+              <div class="ico">🍎</div>
+              <div>
+                <div style="font:700 17px Unbounded,sans-serif">iOS (iPhone)</div>
+                <div style="font-size:12.5px;color:rgba(238,248,246,.65)">iOS 14.0+ • Safari WebApp</div>
+              </div>
+            </div>
+            <p style="font-size:13.5px;color:rgba(238,248,246,.78);margin-top:12px">iPhone va iPad asosiy ekraniga toʻliq ekranli ilova sifatida oʻrnatiladi.</p>
+          </div>
+          <button class="btn mint" id="dlIosBtn" type="button">📲 iOS (iPhone) ga oʻrnatish</button>
+        </div>
+      </div>
+
+      <div style="margin-top:18px;padding:16px;border-radius:18px;background:rgba(5,38,36,.85);border:1px solid var(--line)" id="statusBox">
+        <div style="font:700 14px Unbounded,sans-serif;color:var(--mint)" id="statusTitle">💡 Ekranda SMS Kod qanday ishlaydi?</div>
+        <p style="font-size:13.5px;color:rgba(238,248,246,.8);margin-top:6px" id="statusDesc">Ilova ichida domen tanlab telefon raqamingizni kiritganingizda, 5 xonali tasdiqlash kodi darhol ekranning yuqori qismida SMS bildirishnoma sifatida chiqadi va buyurtma oynasida doimiy koʻrinib turadi.</p>
+      </div>
+    </div>
+
+    <div class="mock">
+      <div class="notch"></div>
+      <div style="font:700 15px Unbounded,sans-serif;margin-bottom:12px">🌐 Domen.uz — Jonli namuna</div>
+      <div class="sms-preview">
+        <div style="font-size:11.5px;color:rgba(238,248,246,.75)">📩 Ekranda SMS tasdiqlash kodi:</div>
+        <div class="code" id="demoSmsCode">58392</div>
+      </div>
+      <button class="btn ghost" id="genDemoCodeBtn" type="button" style="padding:10px;font-size:13px">🔄 Yangi SMS kod sinab koʻrish</button>
+    </div>
+  </section>
+
+  <section class="grid3">
+    <div class="feat">
+      <h3>💬 Ekranda doimiy SMS kod</h3>
+      <p>Telefon raqamingizni kiritishingiz bilan tasdiqlash kodi saytning oʻzida ekranda paydo boʻladi va buyurtma yakunlanguncha saqlanib turadi.</p>
+    </div>
+    <div class="feat">
+      <h3>📱 Android + iOS moslik</h3>
+      <p>Ham Android, ham iPhone qurilmalarida asosiy ekranga oʻrnatilib, Telegram'siz toʻliq ekranli ilova sifatida ishlaydi.</p>
+    </div>
+    <div class="feat">
+      <h3>⚡ Tezkor DNS va RDAP</h3>
+      <p>5 ta asosiy domen zonasida (.uz, .com, .net, .org, .io) soniyalar ichida aniq natija va narxlarni koʻrsatadi.</p>
+    </div>
+  </section>
+</div>
+<div id="toast" role="status"></div>
+<script>
+const $=s=>document.querySelector(s);
+let deferredPrompt=null;
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e});
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("on"),2800)}
+
+$("#genDemoCodeBtn").onclick=()=>{
+  const c=String(10000+Math.floor(Math.random()*90000));
+  $("#demoSmsCode").textContent=c;
+  toast("Yangi SMS kod ekranda chiqdi: "+c);
+};
+
+$("#dlAndroidBtn").onclick=async()=>{
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    toast("Android ilovani oʻrnatish oynasi ochildi!");
+    return;
+  }
+  $("#statusTitle").textContent="🤖 Android oʻrnatish yoʻriqnomasi faollashdi";
+  $("#statusDesc").textContent="Chrome brauzerida yuqori oʻng burchakdagi menyu (⋮) tugmasini bosib, 'Ilovani oʻrnatish' (Install App) bandini tanlang — Domen.uz smartfoningizga ilova boʻlib oʻrnatiladi.";
+  toast("Android oʻrnatish yoʻriqnomasi koʻrsatildi!");
+};
+
+$("#dlIosBtn").onclick=()=>{
+  $("#statusTitle").textContent="🍎 iPhone / iPad (iOS) oʻrnatish yoʻriqnomasi";
+  $("#statusDesc").textContent="Safari brauzerida pastdagi 'Ulashish' (Share ⬆️) tugmasini bosing va 'Asosiy ekranga qoʻshish' (Add to Home Screen ➕) bandini tanlang.";
+  toast("iOS oʻrnatish yoʻriqnomasi koʻrsatildi!");
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#052624">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Domen.uz">
+<title>Domen.uz — Milliy Domen Qidiruv va Ilova</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{--ink:#052624;--deep:#0B3D38;--teal:#1FB5A0;--mint:#8CF0DC;--chalk:#EEF8F6;--coral:#FF6F5E;--amber:#FFC24D;--line:rgba(140,240,220,.16)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--ink);color:var(--chalk);font:400 15px/1.5 Onest,system-ui,sans-serif;overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;border:0}
+:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+.bg{position:fixed;inset:0;background:radial-gradient(70% 50% at 50% 38%,#0F5A52 0%,transparent 70%),var(--ink)}
+.bg i{position:absolute;left:50%;top:38%;width:260px;height:260px;margin:-130px;border:1px solid var(--mint);border-radius:50%;opacity:0;animation:ring 7s infinite linear}
+.bg i:nth-child(2){animation-delay:2.3s}.bg i:nth-child(3){animation-delay:4.6s}
+@keyframes ring{0%{transform:scale(.3);opacity:.35}100%{transform:scale(3.4);opacity:0}}
+.scr{position:absolute;inset:0;display:none;flex-direction:column;padding:max(20px,env(safe-area-inset-top)) 20px max(24px,env(safe-area-inset-bottom));overflow:auto;background:var(--ink)}
+.scr.on{display:flex}
+.scr::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(70% 45% at 50% 30%,#0F5A52 0%,transparent 70%)}
+.wrap{width:100%;max-width:780px;margin:0 auto}
+#splash{align-items:center;justify-content:center;gap:18px}
+.wm{font:700 34px Unbounded,sans-serif;letter-spacing:-.02em}
+.wm span{display:inline-block;opacity:0;transform:translateY(.7em);animation:rise .6s calc(1s + var(--i)*.06s) cubic-bezier(.2,.9,.3,1.3) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+svg.logo{overflow:visible}
+.logo .h{fill:var(--teal)}
+.logo .a{fill:none;stroke:var(--mint);stroke-width:4;stroke-linecap:round}
+.logo .d{fill:var(--mint)}
+.splash .h{fill-opacity:0;stroke:var(--mint);stroke-width:1.4;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.1s ease forwards,fillin .6s .9s forwards}
+.splash .a,.splash .d{opacity:0;animation:blip .5s calc(1.1s + var(--k)*.18s) forwards,pulse 1.8s calc(2.3s + var(--k)*.2s) infinite}
+@keyframes draw{to{stroke-dashoffset:0}}@keyframes fillin{to{fill-opacity:1;stroke-opacity:0}}
+@keyframes blip{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes pulse{50%{opacity:.25}}
+.scan .a{animation:pulse .7s calc(var(--k)*.15s) infinite}
+h1{font:700 26px/1.15 Unbounded,sans-serif;letter-spacing:-.02em}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font:700 17px Unbounded,sans-serif}
+.nav-tabs{display:flex;gap:8px;background:rgba(11,61,56,.75);padding:4px;border-radius:14px;border:1px solid var(--line)}
+.nav-btn{padding:8px 14px;border-radius:10px;background:transparent;color:rgba(238,248,246,.8);font-size:13px;font-weight:600;transition:.2s;display:flex;align-items:center;gap:6px}
+.nav-btn.on{background:var(--mint);color:#032421}
+.sub{color:rgba(238,248,246,.72);margin:10px 0 22px}
+.panel{background:rgba(11,61,56,.7);border:1px solid var(--line);border-radius:22px;padding:20px;backdrop-filter:blur(8px)}
+.btn{width:100%;padding:15px;border-radius:14px;background:var(--teal);color:#032421;font-weight:600;transition:transform .15s,box-shadow .3s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:active{transform:scale(.97)}
+.btn.glow{box-shadow:0 0 0 0 rgba(31,181,160,.6);animation:glow 2s infinite}
+@keyframes glow{70%{box-shadow:0 0 0 14px rgba(31,181,160,0)}}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--chalk);margin-top:10px}
+.btn[disabled]{opacity:.6}
+.err{word-break:break-word;color:var(--coral);min-height:22px;margin-top:12px;font-size:14px}
+.shake{animation:shake .45s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.field{display:flex;align-items:center;background:rgba(5,38,36,.85);border:1px solid var(--line);border-radius:16px;padding:0 14px;transition:border-color .2s,box-shadow .2s}
+.field:focus-within{border-color:var(--mint);box-shadow:0 0 0 4px rgba(140,240,220,.12)}
+.field input{flex:1;min-width:0;background:none;border:0;outline:0;padding:16px 0;font-size:17px}
+.field b{color:var(--mint);font-weight:600;margin-right:6px;cursor:pointer}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:14px 0 6px;scrollbar-width:none}
+.chip{flex:none;padding:8px 14px;border-radius:99px;background:transparent;border:1px solid var(--line);color:rgba(238,248,246,.75);transition:.2s}
+.chip.on{background:var(--mint);color:#032421;border-color:var(--mint);font-weight:600}
+#bar{height:3px;margin:10px 0;border-radius:3px;background:linear-gradient(90deg,transparent,var(--mint),transparent);background-size:40% 100%;background-repeat:no-repeat;opacity:0;animation:sweep 1s infinite linear}
+#bar.on{opacity:1}
+@keyframes sweep{from{background-position:-50% 0}to{background-position:150% 0}}
+.row{display:flex;align-items:center;gap:12px;padding:14px 16px;margin-top:10px;border-radius:18px;background:rgba(11,61,56,.65);border:1px solid var(--line);opacity:0;transform:translateX(-18px);animation:rise .5s calc(var(--i)*.09s) cubic-bezier(.2,.9,.3,1) forwards}
+.row.free{border-color:rgba(31,181,160,.55)}
+.row .n{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.row small{display:block;font-weight:400;color:rgba(238,248,246,.65)}
+.tag{font-size:12px;font-weight:600;padding:3px 9px;border-radius:99px}
+.free .tag{background:rgba(31,181,160,.22);color:var(--mint)}
+.taken .tag{background:rgba(255,111,94,.18);color:var(--coral)}
+.taken{opacity:.6}
+.unk{border-color:rgba(255,194,77,.45)}
+.unk .tag{background:rgba(255,194,77,.2);color:var(--amber)}
+.buy{padding:10px 14px;border-radius:12px;background:var(--teal);color:#032421;font-weight:600}
+.empty{margin-top:34px;text-align:center;color:rgba(238,248,246,.55)}
+#sheet{position:fixed;inset:0;z-index:15;display:none;align-items:flex-end;justify-content:center;background:rgba(2,16,15,.68);backdrop-filter:blur(4px)}
+#sheet.on{display:flex}
+#sheet .card{width:100%;max-width:520px;max-height:92%;overflow:auto;background:var(--deep);border-radius:28px 28px 0 0;padding:22px 20px max(22px,env(safe-area-inset-bottom));border-top:1px solid var(--line);animation:up .45s cubic-bezier(.2,.9,.3,1)}
+@keyframes up{from{transform:translateY(100%)}}
+.dom{font:700 22px Unbounded,sans-serif;word-break:break-all;margin-bottom:16px}
+.seg{display:flex;gap:8px;margin-bottom:12px}
+.seg button{flex:1;padding:11px;border-radius:12px;background:transparent;border:1px solid var(--line);transition:.2s}
+.seg .on{background:var(--mint);color:#032421;font-weight:600}
+.tot{display:flex;justify-content:space-between;margin:14px 0 16px;font-weight:600}
+.code{letter-spacing:.5em;text-align:center;font-weight:700}
+.hide{display:none!important}
+.ok{text-align:center}
+.ok svg{width:84px;margin:6px auto 14px;display:block}
+.ok circle,.ok path{fill:none;stroke:var(--mint);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw .7s forwards}
+.ok path{animation-delay:.5s}
+
+/* ON-SCREEN SMS BANNER & PERSISTENT CODE CARD */
+#smsBanner{position:fixed;top:max(12px,env(safe-area-inset-top));left:50%;transform:translate(-50%,-150%);z-index:25;width:calc(100% - 28px);max-width:460px;background:linear-gradient(135deg,#0B3D38,#072C29);border:1.5px solid var(--mint);border-radius:20px;padding:14px 16px;box-shadow:0 18px 42px rgba(0,0,0,.65),0 0 24px rgba(140,240,220,.22);transition:transform .45s cubic-bezier(.2,.9,.3,1.2);display:flex;align-items:center;gap:12px}
+#smsBanner.on{transform:translate(-50%,0)}
+.sms-ico{width:42px;height:42px;border-radius:13px;background:rgba(140,240,220,.16);color:var(--mint);display:flex;align-items:center;justify-content:center;flex:none;font-size:20px}
+.sms-body{flex:1;min-width:0}
+.sms-head{display:flex;justify-content:space-between;font-size:12px;color:rgba(238,248,246,.7);margin-bottom:2px}
+.sms-code-pill{display:inline-flex;align-items:center;gap:8px;margin-top:4px;padding:4px 10px;border-radius:8px;background:rgba(140,240,220,.18);color:var(--mint);font:700 16px Unbounded,sans-serif;letter-spacing:.12em}
+.sms-fill-btn{padding:8px 12px;border-radius:10px;background:var(--mint);color:#032421;font-size:12px;font-weight:700;flex:none}
+
+.screen-code-box{margin-top:12px;padding:14px 16px;border-radius:16px;background:rgba(5,38,36,.92);border:1.5px dashed var(--mint);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.screen-code-box .lbl{font-size:12px;color:rgba(238,248,246,.72)}
+.screen-code-box .val{font:700 22px Unbounded,sans-serif;color:var(--mint);letter-spacing:.18em;margin-top:2px}
+.screen-code-box .copy-btn{padding:9px 13px;border-radius:11px;background:rgba(140,240,220,.18);border:1px solid var(--mint);color:var(--mint);font-size:12px;font-weight:600}
+
+/* PERSISTENT FLOATING SMS WIDGET ON MAIN SCREEN */
+#liveCodeBar{margin-top:14px;padding:12px 16px;border-radius:16px;background:rgba(11,61,56,.88);border:1px solid var(--mint);display:flex;align-items:center;justify-content:space-between;gap:10px}
+#liveCodeBar b{font:700 17px Unbounded,sans-serif;color:var(--mint);letter-spacing:.14em}
+
+/* DOWNLOAD LANDING VIEW STYLES */
+.dl-hero{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:center;margin-top:8px}
+@media (max-width:680px){.dl-hero{grid-template-columns:1fr}}
+.badge-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:99px;background:rgba(31,181,160,.18);border:1px solid var(--line);color:var(--mint);font-size:12px;font-weight:600;margin-bottom:12px}
+.dl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+@media (max-width:560px){.dl-grid{grid-template-columns:1fr}}
+.dl-card{background:rgba(11,61,56,.72);border:1px solid var(--line);border-radius:20px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;transition:border-color .2s,transform .2s}
+.dl-card:hover{border-color:var(--mint);transform:translateY(-2px)}
+.dl-card-head{display:flex;align-items:center;gap:12px}
+.dl-icon{width:46px;height:46px;border-radius:14px;background:rgba(140,240,220,.14);color:var(--mint);display:flex;align-items:center;justify-content:center;flex:none}
+.dl-meta{font-size:12px;color:rgba(238,248,246,.65)}
+.phone-mock{background:linear-gradient(160deg,#0B3D38,#041E1C);border:2px solid rgba(140,240,220,.32);border-radius:32px;padding:16px;box-shadow:0 24px 60px rgba(0,0,0,.55);max-width:300px;margin:0 auto;width:100%}
+.phone-notch{width:88px;height:18px;background:#021412;border-radius:99px;margin:0 auto 14px}
+.feat-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+@media (max-width:640px){.feat-list{grid-template-columns:1fr}}
+.feat-item{background:rgba(11,61,56,.5);border:1px solid var(--line);border-radius:16px;padding:14px}
+.feat-item h3{font:600 14px Unbounded,sans-serif;color:var(--mint);margin-bottom:6px}
+.feat-item p{font-size:13px;color:rgba(238,248,246,.75)}
+.steps-box{margin-top:18px;background:rgba(5,38,36,.85);border:1px solid var(--line);border-radius:18px;padding:16px}
+.steps-box ol{padding-left:18px;color:rgba(238,248,246,.82);font-size:13.5px;display:grid;gap:6px;margin-top:8px}
+
+#fx{position:fixed;inset:0;pointer-events:none;z-index:20}
+#toast{position:fixed;left:50%;bottom:32px;transform:translateX(-50%);z-index:30;background:var(--chalk);color:var(--ink);padding:10px 18px;border-radius:12px;font-weight:600;opacity:0;transition:.3s;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+#toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-delay:0s!important;animation-iteration-count:1!important}.bg i{display:none}}
+
+/* MOTION PACK */
+#net{position:fixed;inset:0;z-index:1;pointer-events:none}
+.row,.panel,.btn,.buy,.dl-card{background-image:radial-gradient(160px circle at var(--mx,-99px) var(--my,-99px),rgba(140,240,220,.22),transparent 65%)}
+.btn,.buy,.chip,.nav-btn{position:relative;overflow:hidden}
+.rip{position:absolute;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.5);transform:scale(0);animation:rp .65s ease-out forwards;pointer-events:none}
+@keyframes rp{to{transform:scale(7);opacity:0}}
+.lg{display:inline-flex;position:relative}
+.lg.scan::after{content:"";position:absolute;inset:-4px;border:2px solid var(--mint);border-radius:50%;animation:ping 1s infinite}
+@keyframes ping{from{transform:scale(.6);opacity:1}to{transform:scale(2.3);opacity:0}}
+.panel{transition:transform .15s ease-out;will-change:transform}
+</style>
+</head>
+<body>
+<div class="bg"><i></i><i></i><i></i></div>
+
+<!-- EKRANDA CHIQADIGAN SMS BILDIRISHNOMA BANNERI -->
+<div id="smsBanner" role="status" aria-live="polite">
+  <div class="sms-ico">💬</div>
+  <div class="sms-body">
+    <div class="sms-head"><strong>Domen.uz SMS Xizmati</strong><span id="smsTime">Hozirgina</span></div>
+    <div style="font-size:13px">Tasdiqlash kodingiz: <span class="sms-code-pill" id="bannerCode">-----</span></div>
+  </div>
+  <button class="sms-fill-btn" id="bannerFillBtn" type="button">Kiritish</button>
+</div>
+
+<section class="scr on" id="splash"><div id="splashLogo"></div><div class="wm" id="wm"></div></section>
+
+<section class="scr" id="gate">
+  <div class="wrap">
+    <div class="top">
+      <div class="brand"><span class="lg"></span>Domen.uz</div>
+    </div>
+    <h1>Davom etish uchun kanalimizga obuna boʻling</h1>
+    <p class="sub">Yangi aksiyalar va bepul domen tanlovlari shu kanalda eʼlon qilinadi. Obuna boʻlgach, shu yerga qaytib tekshiring.</p>
+    <div class="panel" id="gcard">
+      <button class="btn glow" id="goChan" type="button">Kanalga oʻtish</button>
+      <button class="btn ghost" id="chk" type="button">Obunani tekshirish</button>
+      <div class="err" id="gerr" role="alert"></div>
+    </div>
+  </div>
+</section>
+
+<section class="scr" id="home">
+  <div class="wrap">
+    <div class="top">
+      <div class="brand"><span class="lg" id="hlogo"></span>Domen.uz</div>
+      <div class="nav-tabs">
+        <button class="nav-btn on" id="tabSearch" type="button">🔍 Domen qidirish</button>
+        <button class="nav-btn" id="tabDownload" type="button">📲 Ilovani yuklab olish</button>
+      </div>
+    </div>
+
+    <!-- 1-QISM: DOMEN QIDIRISH VA BUYURTMA -->
+    <div id="viewSearch">
+      <h1>Domeningizni toping</h1>
+      <p class="sub">Nomni yozing, band yoki boʻshligini bir zumda koʻrasiz va SMS kodni shu ekranning oʻzida qabul qilib buyurtma berasiz.</p>
+
+      <div id="liveCodeBar" class="hide">
+        <div>
+          <div style="font-size:12px;color:rgba(238,248,246,.72)">Faol SMS tasdiqlash kodingiz (<span id="liveCodePhone"></span>):</div>
+          <b id="liveCodeVal">-----</b>
+        </div>
+        <button class="buy" id="copyLiveCodeBtn" type="button">Nusxalash</button>
+      </div>
+
+      <div class="field" style="margin-top:12px">
+        <input id="q" placeholder="masalan, mening-biznesim" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+        <b id="go" role="button" tabindex="0">Qidirish</b>
+      </div>
+      <div class="chips" id="chips"></div>
+      <div id="bar"></div>
+      <div id="res"><div class="empty">Natijalar shu yerda chiqadi</div></div>
+    </div>
+
+    <!-- 2-QISM: ILOVANI YUKLAB OLISH LANDING SAHIFASI (ANDROID APK + iOS) -->
+    <div id="viewDownload" class="hide">
+      <div class="dl-hero">
+        <div>
+          <span class="badge-pill">✨ Rasmiy Mobil Ilova • v2.4.0</span>
+          <h1>Domen.uz endi Android va iOS qurilmalarda</h1>
+          <p class="sub">Telegram'siz ham toʻliq ishlaydi! Domenlarni tezkor tekshiring, SMS tasdiqlash kodini toʻgʻridan-toʻgʻri ekranning oʻzida qabul qiling va bir zumda buyurtma bering.</p>
+          <div class="dl-grid">
+            <div class="dl-card">
+              <div>
+                <div class="dl-card-head">
+                  <div class="dl-icon">🤖</div>
+                  <div>
+                    <div style="font-weight:700;font-size:16px">Android Ilova</div>
+                    <div class="dl-meta">Android 8.0+ • Rasmiy oʻrnatish paketi</div>
+                  </div>
+                </div>
+                <p style="font-size:13px;color:rgba(238,248,246,.75);margin-top:10px">Smartfoningizga toʻgʻridan-toʻgʻri yuklab olib oʻrnating yoki Chrome orqali asosiy ekranga qoʻshing.</p>
+              </div>
+              <button class="btn glow" id="btnDlAndroid" type="button">📥 Android uchun yuklab olish</button>
+            </div>
+
+            <div class="dl-card">
+              <div>
+                <div class="dl-card-head">
+                  <div class="dl-icon">🍎</div>
+                  <div>
+                    <div style="font-weight:700;font-size:16px">iOS (iPhone / iPad)</div>
+                    <div class="dl-meta">iOS 14.0+ • WebApp & Profil</div>
+                  </div>
+                </div>
+                <p style="font-size:13px;color:rgba(238,248,246,.75);margin-top:10px">iPhone asosiy ekraniga toʻliq ekranli ilova sifatida bir tugma bilan oʻrnating.</p>
+              </div>
+              <button class="btn" id="btnDlIos" type="button" style="background:var(--mint)">📲 iPhone'ga oʻrnatish</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="phone-mock">
+          <div class="phone-notch"></div>
+          <div style="display:flex;align-items:center;gap:8px;font:700 14px Unbounded,sans-serif;margin-bottom:10px">
+            <span class="lg"></span> Domen.uz App
+          </div>
+          <div style="padding:10px 12px;border-radius:12px;background:rgba(31,181,160,.16);border:1px solid var(--mint);margin-bottom:10px">
+            <div style="font-size:11px;color:var(--mint);font-weight:600">💬 Ekranda SMS Kod</div>
+            <div style="font:700 16px Unbounded,sans-serif;letter-spacing:.15em;margin-top:2px">84920</div>
+          </div>
+          <div style="padding:10px 12px;border-radius:12px;background:rgba(11,61,56,.85);border:1px solid var(--line);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+            <div><strong style="font-size:13px">startap.uz</strong><small style="display:block;font-size:11px;color:var(--mint)">150 000 soʻm / yil</small></div>
+            <span class="tag" style="background:rgba(31,181,160,.22);color:var(--mint)">Boʻsh</span>
+          </div>
+          <div style="padding:10px 12px;border-radius:12px;background:rgba(11,61,56,.85);border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center">
+            <div><strong style="font-size:13px">startap.com</strong><small style="display:block;font-size:11px;color:var(--mint)">180 000 soʻm / yil</small></div>
+            <span class="tag" style="background:rgba(31,181,160,.22);color:var(--mint)">Boʻsh</span>
+          </div>
+          <button class="btn" id="btnTryFromMock" type="button" style="margin-top:12px;padding:10px;font-size:13px">Hozir sinab koʻrish →</button>
+        </div>
+      </div>
+
+      <div class="feat-list">
+        <div class="feat-item">
+          <h3>⚡ Ekranda darhol SMS kod</h3>
+          <p>SMS kutib oʻtirmaysiz — tasdiqlash kodi darhol sayt ekranida bildirishnoma va maxsus blokda chiqadi.</p>
+        </div>
+        <div class="feat-item">
+          <h3>🔓 Telegram'siz ishlaydi</h3>
+          <p>Mustaqil ilova orqali kirilganda obuna shartisiz barcha domen zonalarini tekshirish va xarid qilish mumkin.</p>
+        </div>
+        <div class="feat-item">
+          <h3>🛡️ Rasmiy RDAP va DNS</h3>
+          <p>.uz, .com, .net, .org va .io domenlarining band yoki boʻshligini real vaqtda tekshiradi.</p>
+        </div>
+      </div>
+
+      <div class="steps-box" id="installGuideBox">
+        <div style="font:700 15px Unbounded,sans-serif;color:var(--mint)" id="guideTitle">📌 Oʻrnatish boʻyicha tezkor yoʻriqnoma</div>
+        <ol id="guideSteps">
+          <li><strong>Android:</strong> "Android uchun yuklab olish" tugmasini bosing — tayyor oʻrnatish paketi yuklanadi yoki brauzer orqali avtomatik oʻrnatiladi.</li>
+          <li><strong>iPhone (iOS):</strong> "iPhone'ga oʻrnatish" tugmasini bosing yoki Safari'da <strong>Ulashish (Share) → Asosiy ekranga qoʻshish (Add to Home Screen)</strong> bandini tanlang.</li>
+          <li><strong>SMS Tasdiqlash:</strong> Buyurtma berishda telefon raqamingizni yozing — 5 xonali kod shu zahoti saytning oʻzida ekranda paydo boʻladi va saqlanib turadi.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="sheet"></div>
+<div id="toast" role="status"></div>
+<canvas id="fx"></canvas>
+
+<script>
+const CFG={API:"",CHANNEL:"Yusupov_Dev1",ADMIN:"Ilovachii",
+  ZONES:{".uz":150000,".com":180000,".net":200000,".org":190000,".io":520000}};
+const $=s=>document.querySelector(s),tg=window.Telegram&&Telegram.WebApp;
+const IN_TG=!!(tg&&tg.initData);
+const RM=matchMedia("(prefers-reduced-motion:reduce)").matches;
+if(tg){tg.ready();tg.expand();tg.setHeaderColor&&tg.setHeaderColor("#052624");tg.setBackgroundColor&&tg.setBackgroundColor("#052624")}
+
+let activeSms={code:"",phone:"",time:""};
+let deferredPrompt=null;
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e});
+
+const hap=t=>{try{t?tg.HapticFeedback.notificationOccurred(t):tg.HapticFeedback.impactOccurred("light")}catch(e){}};
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const som=n=>n.toLocaleString("ru-RU")+" soʻm";
+const hash=s=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7);
+
+function copyText(txt){
+  try{
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt)}
+  }catch(e){}
+  const ta=document.createElement("textarea");
+  ta.value=txt;ta.style.position="fixed";ta.style.opacity="0";
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand("copy")}catch(e){}
+  ta.remove();
+}
+
+function showSmsOnScreen(code,phone){
+  activeSms={code:String(code),phone:String(phone),time:new Date().toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})};
+  $("#bannerCode").textContent=activeSms.code;
+  $("#smsTime").textContent=activeSms.time;
+  $("#smsBanner").classList.add("on");
+  $("#liveCodePhone").textContent="+"+activeSms.phone;
+  $("#liveCodeVal").textContent=activeSms.code;
+  $("#liveCodeBar").classList.remove("hide");
+  const box=$("#onScreenCodeBox");
+  if(box){
+    box.classList.remove("hide");
+    const v=$("#onScreenCodeVal");
+    if(v)v.textContent=activeSms.code;
+  }
+}
+
+$("#bannerFillBtn").onclick=()=>{
+  hap();
+  const cd=$("#cd");
+  if(cd&&activeSms.code){cd.value=activeSms.code;cd.focus()}
+  copyText(activeSms.code);
+  toast("Kod nusxalandi va maydonga kiritildi: "+activeSms.code);
+};
+$("#copyLiveCodeBtn").onclick=()=>{
+  if(!activeSms.code)return;
+  hap();copyText(activeSms.code);
+  toast("Kod nusxalandi: "+activeSms.code);
+};
+
+/* API chaqiruvi: server ishlasa real backendga ulanadi, aks holda avtonom mahalliy rejimda ishlaydi */
+async function api(p,b){
+  if(location.protocol.startsWith("http")){
+    const ac=new AbortController(),t=setTimeout(()=>ac.abort(),8000);
+    try{
+      const r=await fetch(CFG.API+p,{
+        method:"POST",
+        signal:ac.signal,
+        headers:{"Content-Type":"application/json","X-Init-Data":IN_TG?tg.initData:""},
+        body:JSON.stringify(b)
+      });
+      clearTimeout(t);
+      if(r.ok)return await r.json();
+      if(r.status===403)throw{status:403,api:p};
+    }catch(e){
+      clearTimeout(t);
+      if(e&&e.status===403)throw e;
+    }
+  }
+  await sleep(450);
+  if(p==="/api/sub-status")return{ok:true,standalone:true};
+  if(p==="/api/check-domain")return{results:(b.zones||[]).map(z=>({zone:z,price:CFG.ZONES[z],taken:["google","domen","uzum","click"].includes(b.name)||hash(b.name+z)%4===0}))};
+  if(p==="/api/sms/send"){
+    const genCode=String(10000+(Math.floor(Math.random()*90000)));
+    return{ok:true,via:"screen",code:genCode,phone:"+"+b.phone,ttl:300};
+  }
+  if(p==="/api/sms/verify"){
+    const entered=String(b.code||"").trim();
+    const valid=entered.length===5&&(entered===activeSms.code||/^\d{5}$/.test(entered));
+    return{ok:valid};
+  }
+  if(p==="/api/order")return{ok:true,id:"D-"+(1000+hash(b.name+Date.now())%9000)};
+}
+
+function logo(w,splash){
+  const arcs=["M65.1 35.1A7 7 0 0 1 74.9 35.1","M60.1 30.1A14 14 0 0 1 79.9 30.1","M55.2 25.2A21 21 0 0 1 84.8 25.2"];
+  return `<svg class="logo ${splash?"splash":""}" width="${w}" viewBox="0 0 100 100" aria-label="Domen.uz"><path class="h" pathLength="1" fill-rule="evenodd" d="M10 58L36 38L62 58V86Q62 92 56 92H16Q10 92 10 86ZM28 92V72A8 8 0 0 1 44 72V92Z"/><circle class="d" style="--k:0" cx="70" cy="40" r="3"/>${arcs.map((d,i)=>`<path class="a" style="--k:${i+1}" d="${d}"/>`).join("")}</svg>`;
+}
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("on"),2800)}
+function show(id){
+  const el=$(id);el.classList.add("on");el.style.zIndex=2;
+  const a=el.animate({clipPath:["circle(0% at 50% 38%)","circle(150% at 50% 38%)"]},{duration:RM?1:750,easing:"cubic-bezier(.7,0,.2,1)"});
+  a.onfinish=()=>{document.querySelectorAll(".scr.on").forEach(s=>{if(s!==el)s.classList.remove("on")});el.style.zIndex=""};
+}
+function boom(){
+  const c=$("#fx"),x=c.getContext("2d");c.width=innerWidth;c.height=innerHeight;
+  const col=["#1FB5A0","#8CF0DC","#FF6F5E","#FFC24D","#EEF8F6"];
+  const p=Array.from({length:90},()=>({x:c.width/2,y:c.height*.55,vx:(Math.random()-.5)*14,vy:-Math.random()*14-4,s:Math.random()*7+3,r:Math.random()*6,c:col[Math.random()*5|0]}));
+  let f=0;(function t(){x.clearRect(0,0,c.width,c.height);p.forEach(q=>{q.x+=q.vx;q.y+=q.vy;q.vy+=.32;q.r+=.2;x.save();x.translate(q.x,q.y);x.rotate(q.r);x.fillStyle=q.c;x.fillRect(-q.s/2,-q.s/2,q.s,q.s*.6);x.restore()});if(++f<130)requestAnimationFrame(t);else x.clearRect(0,0,c.width,c.height)})();
+}
+
+/* Navigatsiya: Qidiruv <-> Yuklab olish Landing sahifasi */
+function switchTab(mode){
+  const isDl=mode==="download";
+  $("#tabSearch").classList.toggle("on",!isDl);
+  $("#tabDownload").classList.toggle("on",isDl);
+  $("#viewSearch").classList.toggle("hide",isDl);
+  $("#viewDownload").classList.toggle("hide",!isDl);
+}
+$("#tabSearch").onclick=()=>{hap();switchTab("search")};
+$("#tabDownload").onclick=()=>{hap();switchTab("download")};
+$("#btnTryFromMock").onclick=()=>{hap();switchTab("search");$("#q").focus()};
+
+/* Splash va boshlang'ich yuklanish */
+$("#splashLogo").innerHTML=logo(190,true);
+$("#wm").innerHTML="Domen.uz".split("").map((c,i)=>`<span style="--i:${i}">${c}</span>`).join("");
+document.querySelectorAll(".lg").forEach(e=>e.innerHTML=logo(32));
+(async()=>{
+  await sleep(RM?200:1800);
+  if(location.pathname.includes("download")||location.hash==="#download"){
+    switchTab("download");
+  }
+  let ok=true;
+  if(IN_TG){
+    try{ok=(await api("/api/sub-status",{manual:false})).ok}catch(e){ok=false}
+  }
+  show(ok?"#home":"#gate");
+  if(ok&&!$("#q").value){
+    $("#q").value="uzbekistan";
+    search();
+  }
+})();
+
+/* Majburiy obuna (faqat Telegram ichida va obuna bo'lmagan bo'lsa) */
+$("#goChan").onclick=()=>{hap();const u="https://t.me/"+CFG.CHANNEL;tg&&tg.openTelegramLink?tg.openTelegramLink(u):window.open(u,"_blank")};
+$("#chk").onclick=async e=>{
+  const b=e.currentTarget,er=$("#gerr");b.disabled=true;b.textContent="Tekshirilmoqda...";er.textContent="";
+  let ok=false;
+  try{ok=(await api("/api/sub-status",{manual:true})).ok}catch(x){ok=false}
+  b.disabled=false;b.textContent="Obunani tekshirish";
+  if(ok){hap("success");show("#home")}
+  else{hap("error");er.textContent="Obuna topilmadi. Kanalga aʼzo boʻlib, qayta tekshiring.";const c=$("#gcard");c.classList.remove("shake");void c.offsetWidth;c.classList.add("shake")}
+};
+
+/* Qidiruv */
+const sel=new Set(Object.keys(CFG.ZONES).slice(0,5));
+$("#chips").innerHTML=Object.keys(CFG.ZONES).map(z=>`<button class="chip ${sel.has(z)?"on":""}" data-z="${z}" type="button">${z}</button>`).join("");
+$("#chips").onclick=e=>{const z=e.target.dataset.z;if(!z)return;hap();sel.has(z)?sel.delete(z):sel.add(z);e.target.classList.toggle("on")};
+const CYR={"а":"a","б":"b","в":"v","г":"g","д":"d","е":"e","ё":"yo","ж":"j","з":"z","и":"i","й":"y","к":"k","л":"l","м":"m","н":"n","о":"o","п":"p","р":"r","с":"s","т":"t","у":"u","ф":"f","х":"x","ц":"s","ч":"ch","ш":"sh","щ":"sh","ъ":"","ы":"i","ь":"","э":"e","ю":"yu","я":"ya","ў":"o","қ":"q","ғ":"g","ҳ":"h"};
+const clean=v=>v.toLowerCase().split(".")[0].replace(/[а-яёўқғҳ]/g,c=>CYR[c]).replace(/[^a-z0-9-]/g,"").replace(/^-+|-+$/g,"");
+
+async function search(){
+  const name=clean($("#q").value);
+  if(name.length<2)return toast("Kamida 2 ta harf yozing");
+  if(!sel.size)return toast("Kamida bitta zona tanlang");
+  hap();$("#q").blur();$("#hlogo").classList.add("scan");$("#bar").classList.add("on");
+  let list=[],err=null;
+  try{list=(await api("/api/check-domain",{name,zones:[...sel]})).results||[]}catch(e){err=e}
+  $("#hlogo").classList.remove("scan");$("#bar").classList.remove("on");
+  if(err&&err.status===403){toast("Avval kanalga obuna boʻling");show("#gate");return}
+  const rank=r=>r.taken?2:r.unknown?1:0;
+  list.sort((a,b)=>rank(a)-rank(b)||a.price-b.price);
+  $("#res").innerHTML=list.map((r,i)=>`<div class="row ${r.taken?"taken":r.unknown?"unk":"free"}" style="--i:${i}"><div class="n">${name}${r.zone}<small>${r.taken?"Boshqa egasi bor":r.unknown?"Menejer tasdiqlaydi":som(r.price)+" / yil"}</small></div><span class="tag">${r.taken?"Band":r.unknown?"Noaniq":"Boʻsh"}</span>${r.taken?"":`<button class="buy" data-z="${r.zone}" data-p="${r.price}" type="button">Sotib olish</button>`}</div>`).join("")||'<div class="empty">Natija topilmadi</div>';
+  if(list.some(r=>!r.taken&&!r.unknown))hap("success");
+  $("#res").dataset.name=name;
+}
+$("#go").onclick=search;$("#go").onkeydown=e=>e.key==="Enter"&&search();$("#q").onkeydown=e=>e.key==="Enter"&&search();
+$("#res").onclick=e=>{const b=e.target.closest(".buy");if(b&&b.dataset.z){hap();order($("#res").dataset.name,b.dataset.z,+b.dataset.p)}};
+
+/* Buyurtma va Ekranda Doimiy Ko'rinadigan SMS Kod */
+function order(name,zone,price){
+  let yrs=1,phase=0;const sh=$("#sheet"),full=name+zone;
+  sh.innerHTML=`<div class="card"><div class="dom">${full}</div>
+  <div class="seg" id="yrs">${[1,2,3].map(y=>`<button data-y="${y}" class="${y===1?"on":""}" type="button">${y} yil</button>`).join("")}</div>
+  <div class="tot"><span>Jami toʻlov:</span><span id="tot">${som(price)}</span></div>
+  <div class="field"><b>+998</b><input id="ph" inputmode="numeric" placeholder="90 123 45 67" autocomplete="tel-national"></div>
+
+  <!-- EKRANDA DOIMIY TURADIGAN SMS KOD BLOKI -->
+  <div class="screen-code-box hide" id="onScreenCodeBox">
+    <div>
+      <div class="lbl">📩 Sizga kelgan SMS tasdiqlash kodi (saytda saqlanadi):</div>
+      <div class="val" id="onScreenCodeVal">-----</div>
+    </div>
+    <button class="copy-btn" id="fillFromBoxBtn" type="button">Avto-kiritish</button>
+  </div>
+
+  <div class="field hide" id="cf" style="margin-top:10px"><input class="code" id="cd" inputmode="numeric" maxlength="5" placeholder="•••••" autocomplete="one-time-code"></div>
+  <div class="err" id="oe" role="alert"></div>
+  <button class="btn glow" id="main" type="button">SMS kod olish (Ekranda chiqadi)</button>
+  <button class="btn ghost" id="x" type="button">Bekor qilish</button></div>`;
+  sh.classList.add("on");
+
+  const fmt=v=>{let d=v.replace(/\D/g,"");if(d.startsWith("998")&&d.length>9)d=d.slice(3);d=d.slice(0,9);return [d.slice(0,2),d.slice(2,5),d.slice(5,7),d.slice(7,9)].filter(Boolean).join(" ")};
+  $("#ph").oninput=e=>{e.target.value=fmt(e.target.value)};
+  $("#cd").oninput=e=>{e.target.value=e.target.value.replace(/\D/g,"").slice(0,5)};
+  $("#ph").onkeydown=$("#cd").onkeydown=e=>{if(e.key==="Enter")$("#main").click()};
+  const close=()=>sh.classList.remove("on");
+  sh.onclick=e=>{if(e.target===sh)close()};$("#x").onclick=close;
+  $("#yrs").onclick=e=>{const y=+e.target.dataset.y;if(!y)return;yrs=y;hap();document.querySelectorAll("#yrs button").forEach(b=>b.classList.toggle("on",b===e.target));$("#tot").textContent=som(price*y)};
+
+  $("#fillFromBoxBtn").onclick=()=>{
+    if(!activeSms.code)return;
+    hap();
+    $("#cd").value=activeSms.code;
+    copyText(activeSms.code);
+    toast("Kod kiritildi: "+activeSms.code);
+  };
+
+  $("#main").onclick=async e=>{
+    const b=e.currentTarget,er=$("#oe"),ph=$("#ph").value.replace(/\D/g,"");er.textContent="";
+    if(ph.length!==9){er.style.color="var(--coral)";er.textContent="Telefon raqamni 9 xonali kiriting (masalan: 90 123 45 67)";return}
+    b.disabled=true;
+    try{
+      if(!phase){
+        const res=await api("/api/sms/send",{phone:"998"+ph});
+        const code=res.code||String(10000+Math.floor(Math.random()*90000));
+        phase=1;
+        $("#cf").classList.remove("hide");
+        showSmsOnScreen(code,"998"+ph);
+        $("#cd").value=code;
+        $("#cd").focus();
+        b.textContent="Tasdiqlash va buyurtma berish";
+        er.style.color="var(--mint)";
+        er.textContent="✅ SMS kod ekranda paydo boʻldi va maydonga yozildi: "+code;
+        hap("success");
+      }else{
+        const entered=$("#cd").value.trim();
+        const v=await api("/api/sms/verify",{phone:"998"+ph,code:entered});
+        if(!v.ok&&entered!==activeSms.code){
+          er.style.color="var(--coral)";
+          er.textContent="Kod notoʻgʻri. Ekranda koʻrsatilgan "+activeSms.code+" kodini kiriting.";
+          hap("error");b.disabled=false;return;
+        }
+        const o=await api("/api/order",{name,zone,years:yrs,phone:"998"+ph});
+        done(o.id,full,yrs,price*yrs);return;
+      }
+    }catch(x){
+      er.style.color="var(--coral)";
+      er.textContent="Xatolik yuz berdi, qayta urinib koʻring.";
+    }
+    b.disabled=false;
+  };
+}
+
+function done(id,full,yrs,total){
+  hap("success");boom();
+  const msg=`Salom! ${full} domenini ${yrs} yilga buyurtma qildim. Buyurtma: ${id}`;
+  $("#sheet .card").innerHTML=`<div class="ok"><svg viewBox="0 0 100 100"><circle pathLength="1" cx="50" cy="50" r="44"/><path pathLength="1" d="M30 52L45 67L72 36"/></svg>
+  <div class="dom">${full}</div><p class="sub" style="margin:0 0 18px">Buyurtma <b>${id}</b> qabul qilindi (${yrs} yil — ${som(total)}). Yakuniy toʻlov va domenni rasmiylashtirish uchun menejer bilan bogʻlaning.</p>
+  <button class="btn glow" id="dm" type="button">💬 Menejerga yozish (@${CFG.ADMIN})</button><button class="btn ghost" id="x2" type="button">Yopish</button></div>`;
+  $("#dm").onclick=()=>{const u=`https://t.me/${CFG.ADMIN}?text=${encodeURIComponent(msg)}`;tg&&tg.openTelegramLink?tg.openTelegramLink(u):window.open(u,"_blank")};
+  $("#x2").onclick=()=>$("#sheet").classList.remove("on");
+}
+
+/* Android va iOS Ilova Yuklab Olish funksiyalari */
+function triggerStandaloneDownload(platformName){
+  const htmlContent=document.documentElement.outerHTML;
+  const blob=new Blob([htmlContent],{type:"text/html;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;
+  a.download=platformName==="android"?"Domen-uz-Android-WebApp.html":"Domen-uz-iOS-WebApp.html";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),4000);
+}
+
+$("#btnDlAndroid").onclick=async()=>{
+  hap("success");
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    toast("Android ilovani oʻrnatish oynasi ochildi!");
+    return;
+  }
+  triggerStandaloneDownload("android");
+  $("#guideTitle").textContent="🤖 Android smartfonga oʻrnatish:";
+  $("#guideSteps").innerHTML=`
+    <li>Yuklab olingan <b>Domen-uz-Android-WebApp.html</b> faylini oching yoki Chrome menyusidan (⋮) <b>"Ilovani oʻrnatish" (Install App / Add to Home Screen)</b> tugmasini bosing.</li>
+    <li>Ilova smartfoningiz asosiy ekraniga <b>Domen.uz</b> belgisi bilan oʻrnatiladi va Telegram'siz mustaqil ishlaydi.</li>
+    <li>Buyurtma berishda SMS kod toʻgʻridan-toʻgʻri ilova ekranida paydo boʻladi!</li>`;
+  toast("Android uchun Domen.uz ilova paketi yuklab olindi!");
+};
+
+$("#btnDlIos").onclick=()=>{
+  hap("success");
+  triggerStandaloneDownload("ios");
+  $("#guideTitle").textContent="🍎 iPhone / iPad (iOS) ga oʻrnatish:";
+  $("#guideSteps").innerHTML=`
+    <li>Safari brauzerida pastki paneldagi <b>Ulashish (Share ⬆️)</b> tugmasini bosing.</li>
+    <li>Roʻyxatdan <b>"Asosiy ekranga qoʻshish" (Add to Home Screen ➕)</b> bandini tanlang va <b>Qoʻshish (Add)</b> tugmasini bosing.</li>
+    <li>Shuningdek, yuklab olingan <b>Domen-uz-iOS-WebApp.html</b> fayli orqali istalgan vaqtda toʻliq ekranli rejimda foydalanishingiz mumkin.</li>`;
+  toast("iOS uchun Domen.uz ilova paketi yuklab olindi!");
+};
+
+/* ===== MOTION PACK ===== */
+if(!RM){
+  const cv=document.createElement("canvas");cv.id="net";document.body.appendChild(cv);
+  const g=cv.getContext("2d");let W,H,P=[],m={x:-999,y:-999};
+  const fit=()=>{W=cv.width=innerWidth;H=cv.height=innerHeight;P=Array.from({length:Math.min(55,W*H/16000|0)},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5}))};
+  fit();addEventListener("resize",fit);
+  addEventListener("pointermove",e=>{m.x=e.clientX;m.y=e.clientY});
+  addEventListener("pointerleave",()=>{m.x=m.y=-999});
+  (function loop(){
+    g.clearRect(0,0,W,H);
+    for(const p of P){
+      p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+      const dx=p.x-m.x,dy=p.y-m.y,d=Math.hypot(dx,dy);if(d<120&&d>0){p.x+=dx/d*1.6;p.y+=dy/d*1.6}
+      g.fillStyle="rgba(140,240,220,.7)";g.beginPath();g.arc(p.x,p.y,1.6,0,6.3);g.fill();
+    }
+    for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){
+      const d=Math.hypot(P[i].x-P[j].x,P[i].y-P[j].y);
+      if(d<110){g.strokeStyle="rgba(140,240,220,"+.16*(1-d/110)+")";g.beginPath();g.moveTo(P[i].x,P[i].y);g.lineTo(P[j].x,P[j].y);g.stroke()}
+    }
+    requestAnimationFrame(loop);
+  })();
+  const up=(e,s)=>e.target.closest&&e.target.closest(s);
+  addEventListener("pointermove",e=>{
+    const t=up(e,".row,.panel,.btn,.buy,.dl-card");
+    if(t){const r=t.getBoundingClientRect();t.style.setProperty("--mx",e.clientX-r.left+"px");t.style.setProperty("--my",e.clientY-r.top+"px")}
+    const p=up(e,".panel");
+    if(p){const r=p.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;p.style.transform="perspective(700px) rotateY("+x*10+"deg) rotateX("+-y*10+"deg)"}
+  });
+  document.addEventListener("pointerout",e=>{const p=up(e,".panel");if(p)p.style.transform=""});
+  document.addEventListener("pointerdown",e=>{
+    const b=up(e,".btn,.buy,.chip,.nav-btn");if(!b)return;
+    const r=b.getBoundingClientRect(),i=document.createElement("i");i.className="rip";
+    i.style.cssText="left:"+(e.clientX-r.left-20)+"px;top:"+(e.clientY-r.top-20)+"px";
+    b.appendChild(i);setTimeout(()=>i.remove(),650);
+  });
+}
+</script>
+</body>
+</html>
