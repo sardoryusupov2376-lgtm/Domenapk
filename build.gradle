@@ -1,0 +1,33 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'uz.domen.app'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "uz.domen.app"
+        minSdk 24
+        targetSdk 34
+        versionCode 24
+        versionName "2.4.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+        debug {
+            applicationIdSuffix ""
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+}
